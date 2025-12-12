@@ -1046,11 +1046,6 @@
 
         // 抽牌函數
         function drawCards() {
-            // 檢查牌堆是否完整（開發期警告）
-            if (CARDS.length !== 78) {
-                console.warn(`警告：牌堆不完整，目前有 ${CARDS.length} 張牌，應為 78 張`);
-            }
-
             // 取得選擇的牌陣
             const spreadSelect = document.querySelector('input[name="spread"]:checked');
             const spreadCount = parseInt(spreadSelect.value);
@@ -1087,12 +1082,20 @@
             const cardsContainer = document.getElementById('cards-container');
 
             // 顯示問題
+            questionDisplay.style.display = 'block';
             if (question) {
-                questionDisplay.innerHTML = `<strong>你的問題：</strong>${escapeHtml(question)}`;
-                questionDisplay.style.display = 'block';
+                // 安全地構建 DOM 元素
+                questionDisplay.innerHTML = '';
+                const strong = document.createElement('strong');
+                strong.textContent = '你的問題：';
+                const text = document.createTextNode(question);
+                questionDisplay.appendChild(strong);
+                questionDisplay.appendChild(text);
             } else {
-                questionDisplay.innerHTML = '<em>（未填寫問題）</em>';
-                questionDisplay.style.display = 'block';
+                questionDisplay.innerHTML = '';
+                const em = document.createElement('em');
+                em.textContent = '（未填寫問題）';
+                questionDisplay.appendChild(em);
             }
 
             // 清空並重建卡片
@@ -1155,8 +1158,10 @@
 
         // 頁面載入時的初始化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('塔羅抽牌應用已載入');
-            console.log(`牌堆包含 ${CARDS.length} 張牌`);
+            // 檢查牌堆是否完整
+            if (CARDS.length !== 78) {
+                console.warn(`警告：牌堆不完整，目前有 ${CARDS.length} 張牌，應為 78 張`);
+            }
         });
     </script>
 </body>
