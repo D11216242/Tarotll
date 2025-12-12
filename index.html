@@ -1149,13 +1149,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // HTML 跳脫函數（安全性）
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
         // 頁面載入時的初始化
         document.addEventListener('DOMContentLoaded', function() {
             // 檢查牌堆是否完整
